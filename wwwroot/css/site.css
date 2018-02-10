@@ -1,0 +1,27 @@
+/*Write all of your CSS here*/
+.page-header h1 {
+    margin-left: 105px; 
+}
+
+.addproduct {
+    width: 400px;
+    margin: 0px auto;
+}
+
+.mainSettings h1{
+    margin-left: 300px;
+}
+.left{
+    width: 400px;
+    display: inline-block;
+}
+.right{
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 40px;
+}
+.right img{
+    border-radius: 50%;
+}
+
