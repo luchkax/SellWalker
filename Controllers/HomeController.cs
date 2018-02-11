@@ -127,7 +127,11 @@ namespace sellwalker.Controllers
             else
             {
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
-                ViewBag.user = exists.FirstName;
+                ViewBag.userFirst = exists.FirstName;
+                ViewBag.userLast = exists.LastName;
+                ViewBag.userEmail = exists.Email;
+                ViewBag.userPic = exists.ProfilePic;
+            
                 if(exists.Status != "Admin")
                 {
                     return View("Settings");
@@ -142,7 +146,7 @@ namespace sellwalker.Controllers
 
         [HttpPost]
         [Route("/update_user")]
-        public async Task<IActionResult> UpdateInfo(Register check)
+        public async Task<IActionResult> UpdateInfo(UpdateUser check)
         {
             int? id = HttpContext.Session.GetInt32("userId");
             if(id == null)
@@ -157,17 +161,20 @@ namespace sellwalker.Controllers
                     thisUser.FirstName = check.FirstName;
                     thisUser.LastName = check.LastName;
                     thisUser.Email = check.Email;
+                    _context.SaveChanges();
                     // thisUser.Password = check.Password;
-                    var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "uploaded_images");
+                    var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "profile_images");
                     if (check.ProfileImage == null)
                     {
                         _context.SaveChanges();
                         if(thisUser.Status != "Admin")
                         {
-                            return View("Settings");
+                            TempData["error"] = "Added!";
+                            return RedirectToAction("Settings");
                         }
                         else
                         {
+                            TempData["error"] = "Added!";
                             return View("AdminSettings");
                         }
                     }
@@ -177,18 +184,19 @@ namespace sellwalker.Controllers
                         using (var fileStream = new FileStream(filepath, FileMode.Create))
                         {
                             await check.ProfileImage.CopyToAsync(fileStream);
-                            thisUser.ProfilePic = "/uploaded_images/" + check.ProfileImage.FileName;
+                            thisUser.ProfilePic = "/profile_images/" + check.ProfileImage.FileName;
                         }
                         _context.SaveChanges();
 
                         if(thisUser.Status != "Admin")
                         {
-                            return View("Settings", check);
+                            TempData["updated"] = "+";
+                            return View("Settings");
                         }
                         else
                         {
-                            
-                            return View("AdminSettings", check);
+                            TempData["updated"] = "+";
+                            return View("AdminSettings");
                         }
                     }
                 }
@@ -196,16 +204,20 @@ namespace sellwalker.Controllers
                 {
                     if(thisUser.Status != "Admin")
                     {
-                        return View("Settings", check);
+                        TempData["updated"] = "-";
+                        return View("Settings");
                     }
                     else
                     {
-                        return View("AdminSettings", check);
+                        TempData["updated"] = "-";                       
+                        return View("AdminSettings");
                     }
                 }
             }
-        }
 
+
+
+        }
 
     }               
 }

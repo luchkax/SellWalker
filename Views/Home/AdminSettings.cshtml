@@ -1,4 +1,4 @@
-@model sellwalker.Models.Register
+@model sellwalker.Models.UpdateUser
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,23 +46,23 @@
 <div class="mainSettings">
     <h1>Edit your information</h1>
     <br>
-    <div class="alert alert-success">
-        <strong>Success!</strong> Your information is updated.
-    </div>
+             
+        
+   
     <div class="left">
         <br>
         <form asp-controller="Home" asp-action="UpdateInfo" method="post"  enctype="multipart/form-data">
             <div class="form-group">
               <label asp-for="FirstName">First Name</label>
-              <input  asp-for="FirstName" class="form-control" id="FirstName" type="text">
+              <input  asp-for="FirstName" class="form-control" id="FirstName" type="text" value="@ViewBag.userFirst">
               <span asp-validation-for="FirstName"></span>   
               <br>
               <label asp-for="LastName">Last Name</label>
-              <input  asp-for="LastName" class="form-control" id="LastName" type="text">
+              <input  asp-for="LastName" class="form-control" id="LastName" type="text" value="@ViewBag.userLast">
               <span asp-validation-for="LastName"></span>   
               <br>
               <label asp-for="Email">Email</label>
-              <input  asp-for="Email" class="form-control" id="Email" type="text">
+              <input  asp-for="Email" class="form-control" id="Email" type="text" value="@ViewBag.userEmail">
               <span asp-validation-for="Email"></span>   
               <br>
               <!-- <label asp-for="Password">Password</label>
@@ -83,7 +83,17 @@
                 <input  asp-for="ProfileImage" type="file" class="form-control" id="ProfileImage">
                 <span asp-validation-for="ProfileImage"></span>
                 <br>
-        <img src="~/images/Unknown.png">
+        @{
+            if(@ViewBag.userPic != null)
+            {
+                 <img src="@ViewBag.userPic">
+            }
+            else
+            {
+                <p>Upload new picture</p>
+                <img src="~/images/Unknown.png">
+            }
+        }
         </form>
         
     </div>
