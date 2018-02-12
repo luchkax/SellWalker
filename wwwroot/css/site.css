@@ -9,7 +9,7 @@
 }
 
 .mainSettings h1{
-    margin-left: 300px;
+    margin-left: 370px;
 }
 .left{
     width: 400px;
@@ -19,9 +19,11 @@
     width: 200px;
     display: inline-block;
     vertical-align: top;
-    margin-left: 40px;
+    margin-left: 90px;
 }
 .right img{
-    border-radius: 50%;
+    border-radius: 50px;
+    height: 250px;
+    width: 230px;
 }
 

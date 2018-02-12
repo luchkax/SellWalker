@@ -1,3 +1,4 @@
+@model sellwalker.Models.ProductCheck 
  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -17,7 +18,7 @@
         <li>
             <a href="/home">Feed</a>
         </li>
-        <li class="active"><a href="/add_product">Add product<span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="/add_product">Sell product<span class="sr-only">(current)</span></a></li>
         <li class="dropdown">
           <li><a href="/settings">Settings</a></li>
         </li>
@@ -36,8 +37,43 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="main">
-    <div class="page-header">
-        <h1><span style="color:grey">SellWalker</span> - perfect place to sell anything you want</h1>
-    </div>
-</div>
+  <div class="main">
+      <div class="page-header">
+          <h1><span style="color:white" class="label label-default">SellWalker</span> - perfect place to sell anything you want</h1>
+      </div>
+      <div class="addproduct">
+              <h2>Add product</h2>
+          <form asp-controller="Home" asp-action="productAdd" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label asp-for="Condition">Condition:</label>
+                <select class="form-control" asp-for="Condition" id="Condition">
+                  <option value="New">New</option>
+                  <option value="Used">Used</option>
+                  <option value="Refurbished">Refurbished</option>
+                  <option value="Other">Other (Description)</option>
+                </select>
+                <br>
+              <label asp-for="Title">Product name</label>
+              <input  asp-for="Title" class="form-control" id="Title" aria-describedby="TitleHelp">
+              <span asp-validation-for="Title"></span>   
+              <br>
+              <label asp-for="Description">Description</label>
+              <textarea  asp-for="Description" class="form-control" id="Description" aria-describedby="DescriptionHelp"></textarea>
+              <span asp-validation-for="Description"></span> 
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Price $</span>
+                <input  asp-for="Price" class="form-control" id="Price" aria-describedby="PriceHelp">
+                <span asp-validation-for="Price"></span> 
+              </div>
+              <br>  
+              <label asp-for="Image">Image</label>
+              <input  asp-for="Image" type="file" class="form-control" id="Image">
+              <span asp-validation-for="Image"></span>
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Done</button>
+          </form>
+      </div>
+  </div>
+  <hr>

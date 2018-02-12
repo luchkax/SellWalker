@@ -19,13 +19,6 @@
               <a href="/home">Feed</a>
           </li>
           <li ><a href="/add_product">Sell product <span class="sr-only">(current)</span></a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Controll center <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Customers and orders</a></li>
-              <li><a href="#">Products controll</a></li>
-              <li><a href="/logout">XXX</a></li>
-            </ul>
             <li class="active"><a href="/settings">Settings</a></li>
           </li>
         </ul>
@@ -45,7 +38,7 @@
   </nav>
 <div class="mainSettings">
     <h1>Edit your information</h1>
-    <hr>
+    <br>
              
         
    
@@ -86,12 +79,12 @@
         @{
             if(@ViewBag.userPic != null)
             {
-                 <img src="@ViewBag.userPic" alt="image">
+                 <img src="@ViewBag.userPic">
             }
             else
             {
                 <p>Upload new picture</p>
-                <img src="~/images/Unknown.png" alt="image">
+                <img src="~/images/Unknown.png">
             }
         }
         </form>

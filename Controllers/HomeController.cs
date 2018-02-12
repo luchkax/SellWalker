@@ -22,13 +22,28 @@ namespace sellwalker.Controllers
             _context = context;
             _hostingEnvironment = environment;
         }
-        // GET: /Home/
+
+        private bool checkLogStatus()
+        {
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null)
+            {
+                TempData["UserError"] = "You must be logged in!";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+// RENDER HOMEPAGE //
         [HttpGet]
         [Route("/home")]
         public IActionResult Homepage()
         {
             int? id = HttpContext.Session.GetInt32("userId");
-            if(id == null)
+            if(checkLogStatus() == false)
             {
                 return RedirectToAction("LoginPage", "User");                           
             }
@@ -46,7 +61,7 @@ namespace sellwalker.Controllers
                 }
             }
         }
-
+// RENDER ADD_PRODUCT 
         [HttpGet]
         [Route("/add_product")]
         public IActionResult AddProduct()
@@ -70,7 +85,7 @@ namespace sellwalker.Controllers
                 }
             }
         }
-
+// POST CREATE_PRODUCT
         [HttpPost]
         [Route("/create_product")]
         public async Task<IActionResult> productAdd(ProductCheck check)
@@ -114,7 +129,7 @@ namespace sellwalker.Controllers
                 return RedirectToAction("Homepage");
             }
         }
-
+// RENDER SETTINGS
         [HttpGet]
         [Route("/settings")]
         public IActionResult Settings()
@@ -143,7 +158,7 @@ namespace sellwalker.Controllers
             }
         }
 
-
+// POST UPDATE USER FROM SETTINGS
         [HttpPost]
         [Route("/update_user")]
         public async Task<IActionResult> UpdateInfo(UpdateUser check)
@@ -162,19 +177,16 @@ namespace sellwalker.Controllers
                     thisUser.LastName = check.LastName;
                     thisUser.Email = check.Email;
                     _context.SaveChanges();
-                    // thisUser.Password = check.Password;
                     var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "profile_images");
                     if (check.ProfileImage == null)
                     {
                         _context.SaveChanges();
                         if(thisUser.Status != "Admin")
                         {
-                            TempData["error"] = "Added!";
                             return RedirectToAction("Settings");
                         }
                         else
                         {
-                            TempData["error"] = "Added!";
                             return View("AdminSettings");
                         }
                     }
