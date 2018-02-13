@@ -37,6 +37,20 @@ namespace sellwalker.Controllers
             }
         }
 
+        private bool checkUserStatus()
+        {
+            User userCheck = _context.Users.Where(u=>u.UserId == HttpContext.Session.GetInt32("userId")).SingleOrDefault();
+            if(userCheck.Status != "Admin")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
 // RENDER HOMEPAGE //
         [HttpGet]
         [Route("/home")]
@@ -51,7 +65,7 @@ namespace sellwalker.Controllers
             {   
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
                 ViewBag.name = exists.FirstName;
-                if(exists.Status != "Admin")
+                if(checkUserStatus() == false)
                 {
                     return View("Homepage");
                 }
@@ -73,8 +87,7 @@ namespace sellwalker.Controllers
             }
             else
             {
-                User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
-                if(exists.Status != "Admin")
+                if(checkUserStatus() == false)
                 {
                     return View("NewProduct");
                 }
@@ -147,7 +160,7 @@ namespace sellwalker.Controllers
                 ViewBag.userEmail = exists.Email;
                 ViewBag.userPic = exists.ProfilePic;
             
-                if(exists.Status != "Admin")
+                if(checkUserStatus() == false)
                 {
                     return View("Settings");
                 }
@@ -181,7 +194,7 @@ namespace sellwalker.Controllers
                     if (check.ProfileImage == null)
                     {
                         _context.SaveChanges();
-                        if(thisUser.Status != "Admin")
+                        if(checkUserStatus() == false)
                         {
                             return RedirectToAction("Settings");
                         }
@@ -214,7 +227,7 @@ namespace sellwalker.Controllers
                 }
                 else
                 {
-                    if(thisUser.Status != "Admin")
+                    if(checkUserStatus() == false)
                     {
                         TempData["updated"] = "-";
                         return View("Settings");
@@ -226,9 +239,138 @@ namespace sellwalker.Controllers
                     }
                 }
             }
+        }
 
+        [HttpGet]
+        [Route("/products_control")]
+        public IActionResult ProductsControl()
+        {
+            int? id = HttpContext.Session.GetInt32("userId");
+            if(id == null)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                List<Product> allProducts = _context.Products.Include(u=>u.Seller).OrderBy(y=>y.Title).ToList();
+                ViewBag.products = allProducts;
+                return View("ProductsControl");
+            }
+        }
 
+        [HttpGet]
+        [Route("/product/{productId}/delete")]
+        public IActionResult deleteProduct(int productId)        
+        {
+            int? id = HttpContext.Session.GetInt32("userId");
+            if(id == null)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                _context.Products.Remove(thisProduct);
+                _context.SaveChanges();
+                return RedirectToAction("ProductsControl");
+            }
+        }
+    
+        [HttpGet]
+        [Route("/product/{productId}")]
+        public IActionResult ProductPage(int productId)        
+        {
+            int? id = HttpContext.Session.GetInt32("userId");
+            if(id == null)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                ViewBag.thisProduct = thisProduct;
 
+                if(checkUserStatus() == false)
+                {
+                    return View("ProductPage");
+                }
+                else
+                {
+                    return View("AdminProductPage");
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("/product/{productId}/edit")]
+        public IActionResult ProductPageEdit(int productId)        
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {   
+                int? id = HttpContext.Session.GetInt32("userId");
+                Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                ViewBag.thisProduct = thisProduct;
+                ViewBag.title = thisProduct.Title;
+                
+                if(checkUserStatus() == false)
+                {
+                    return View("ProductPageEdit");
+                }
+                else
+                {
+                    return View("AdminProductPageEdit");
+                }
+            }
+        }
+
+        [HttpPost]
+        [Route("/product/edit")]
+        public async Task<IActionResult> EditProduct(ProductCheck check, int productId)        
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {   
+                Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                if(ModelState.IsValid)
+                {
+                    thisProduct.Title = check.Title;
+                    thisProduct.Description = check.Description;
+                    thisProduct.Price = check.Price;
+                    thisProduct.Condition = check.Condition;
+                    var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "uploaded_images");
+                    if (check.Image != null)
+                    {
+                        var filepath = Path.Combine(uploadDestination, check.Image.FileName);
+                        using (var fileStream = new FileStream(filepath, FileMode.Create))
+                        {
+                            await check.Image.CopyToAsync(fileStream);
+                            thisProduct.Picture = "/uploaded_images/" + check.Image.FileName;
+                        }
+                    }
+                    _context.SaveChanges();
+                    return RedirectToAction("ProductPageEdit");
+                }
+                else
+                {
+                    if(checkUserStatus() == false)
+                    {
+                        TempData["Error"] = "Inputed data incorrect";
+                        return View("ProductPageEdit");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Inputed data incorrect";                        
+                        return View("AdminProductPageEdit");
+                    }
+                }
+            }
         }
 
     }               

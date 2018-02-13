@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Products Controll | SELLWALKER";
 }
  <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -17,22 +17,22 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active">
+        <li>
             <a href="/home">Feed<span class="sr-only">(current)</span></a>
         </li>
         <li><a href="/add_product">Sell product</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Controll center <span class="caret"></span></a>
+        <li class="dropdown" >
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="color: #377BB5">Controll center</span>  <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Customers and orders</a></li>
-            <li><a href="/products_control">Products control</a></li>
+            <li class="active"><a href="#">Products control</a></li>
             <li><a href="/logout">Customers control</a></li>
           </ul>
           <li><a href="/settings">Settings</a></li>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" style="color:black"></span> Cart</a></li>
+          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" style="color:black"></span> Cart</a></li>
           </li>
         <li><a href="/logout">Log out</a></li>
         </li>
@@ -47,6 +47,38 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<h2>Hi @ViewBag.name</h2>
-@TempData["error"]
-
+ <div class="main">
+      <div class="page-header">
+          <h1>Manage listed products </h1>
+      </div>
+    <div class="table-responsive">          
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product name</th>
+            <th>Date posted</th>
+            <th>Seller</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in @ViewBag.products)
+                {
+        <tr>
+            <td>@item.ProductId</td>
+            <td><a href="/product/@item.ProductId">@item.Title</a></td>
+            <td>@item.CreatedAt</td>
+            <td><a href="/user/@item.UserId">@item.Seller.FirstName</a></td>
+            <td>$@item.Price</td>
+            <td><a href="/product/@item.ProductId/delete"> Delete</a> | <a href="/product/@item.ProductId/edit">Edit</a></td>
+        </tr>
+               }
+        }
+        </tbody>
+     
+    </table>
+    </div>
+</div>
