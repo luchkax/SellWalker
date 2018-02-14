@@ -54,9 +54,21 @@
         </div>
      </div>
  <div class="mainProduct">
-    <div class="picture">
-        <img src="@ViewBag.thisProduct.Picture" alt="No image available">
-    </div>
+    @{
+    if(@ViewBag.thisProduct.Picture != null)
+    {
+        <div class="picture">
+            <img src="@ViewBag.thisProduct.Picture" alt="No image available">
+        </div>
+    }
+    else
+    {
+        <div class="picture">
+            <img src="~/images/noimage.png" alt="No image available">
+        </div>
+    }
+    }
+   
     <div class="content">
         <h2>@ViewBag.thisProduct.Title</h2>
         <span style="color:white" class="label label-default">@ViewBag.thisProduct.Condition</span>
