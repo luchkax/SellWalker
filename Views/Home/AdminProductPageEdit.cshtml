@@ -1,4 +1,4 @@
-@model sellwalker.Models.ProductCheck 
+@model sellwalker.Models.ProductCheck
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -45,13 +45,30 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <h1>Edit product</h1>
+  <a href="/products_control"><button type="button" class="btn btn-default btn-arrow-left">Back</button></a>
+  <h1>Edit product</h1> 
   <hr>
   <div class="editMain">
+      @{
+          if(@TempData["complete"] == "true")
+          {
+           <div class="alert alert-success" role="alert">
+                <strong>Well done!</strong> You successfully read this important alert message.
+            </div>
+          }
+          else if(@TempData["complete"] == "Error")
+          {
+            <div class="alert alert-danger" role="alert">
+                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+            </div>
+          }
+      }
+
       <form asp-controller="Home" asp-action="EditProduct" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label asp-for="Condition">Condition:</label>
                 <select class="form-control" asp-for="Condition" id="Condition">
+                  <option value="@ViewBag.thisProduct.Condition">@ViewBag.thisProduct.Condition</option>
                   <option value="New">New</option>
                   <option value="Used">Used</option>
                   <option value="Refurbished">Refurbished</option>

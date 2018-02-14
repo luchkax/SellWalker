@@ -288,6 +288,17 @@ namespace sellwalker.Controllers
             else
             {
                 Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                User thisSeller = _context.Users.Where(a=>a.UserId == thisProduct.UserId).SingleOrDefault();
+                List<Product> thoseProducts = _context.Products.Where(r=>r.UserId == thisSeller.UserId).ToList();
+                string someDate = thisProduct.CreatedAt.ToString();
+                DateTime startDate = DateTime.Parse(someDate);
+                DateTime now = DateTime.Now;
+                TimeSpan elapsed = now.Subtract(startDate);
+                double daysAgo = elapsed.TotalDays;
+
+                ViewBag.date = daysAgo.ToString("0");
+                ViewBag.thoseProducts = thoseProducts;
+                ViewBag.thisSeller = thisSeller;
                 ViewBag.thisProduct = thisProduct;
 
                 if(checkUserStatus() == false)
@@ -315,7 +326,6 @@ namespace sellwalker.Controllers
                 Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
                 ViewBag.thisProduct = thisProduct;
                 ViewBag.title = thisProduct.Title;
-                
                 if(checkUserStatus() == false)
                 {
                     return View("ProductPageEdit");
@@ -328,7 +338,7 @@ namespace sellwalker.Controllers
         }
 
         [HttpPost]
-        [Route("/product/edit")]
+        [Route("/product/edit/{productId}")]
         public async Task<IActionResult> EditProduct(ProductCheck check, int productId)        
         {
             if(checkLogStatus() == false)
@@ -354,6 +364,7 @@ namespace sellwalker.Controllers
                             thisProduct.Picture = "/uploaded_images/" + check.Image.FileName;
                         }
                     }
+                    TempData["complete"] = "true";
                     _context.SaveChanges();
                     return RedirectToAction("ProductPageEdit");
                 }

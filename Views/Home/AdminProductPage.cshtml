@@ -19,11 +19,11 @@
           </li>
           <li ><a href="/add_product">Sell product <span class="sr-only">(current)</span></a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Controll center <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Control center <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Customers and orders</a></li>
-              <li><a href="products_control">Products control</a></li>
-              <li><a href="/#">Customers control</a></li>
+              <li><a href="/products_control">Products control</a></li>
+              <li><a href="/customers_control">Customers control</a></li>
             </ul>
             <li><a href="/settings">Settings</a></li>
           </li>
@@ -44,5 +44,62 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <a href="/products_control"><button type="button" class="btn btn-default btn-arrow-left">Back</button></a>
-  <h3></h3>
+  <div class="header">
+        <div class="card1 card-inverse" style="background-color: #333; border-color: #333;">
+            <div class="card-block1">
+                <h3 class="card-title">SellWalker</h3>
+                <p class="card-text">Have extra stuff? No problems! Sell. Just sell it!</p>
+                <a href="/add_product" class="btn btn-primary">Sell Product</a>
+            </div>
+        </div>
+     </div>
+ <div class="mainProduct">
+    <div class="picture">
+        <img src="@ViewBag.thisProduct.Picture" alt="No image available">
+    </div>
+    <div class="content">
+        <h2>@ViewBag.thisProduct.Title</h2>
+        <span style="color:white" class="label label-default">@ViewBag.thisProduct.Condition</span>
+        <hr>
+        <h4>Description</h4>
+        <p>@ViewBag.thisProduct.Description</p>
+        @{
+            if(@ViewBag.date == "0")
+            {
+                <span style="color: grey; font-size: 12px;"><p>Posted today</p></span> 
+            }
+            else
+            {
+                <span style="color: grey; font-size: 12px;"><p>Posted @ViewBag.date days ago</p></span>      
+            }
+        }
+        <hr>
+        <a href="/user/@ViewBag.thisProduct.Seller.UserId"><h3><img src="@ViewBag.thisSeller.ProfilePic">  @ViewBag.thisProduct.Seller.FirstName</h3></a>
+        <p><a href="mailto:@ViewBag.thisSeller.Email"> <i class="glyphicon glyphicon-envelope"></i> Email</p></a> | <a href="#">Message</a>
+    </div>
+   
+ </div>
+ <hr>
+ <div class="restProducts">
+     <h2>See other offers from @ViewBag.thisProduct.Seller.FirstName</h2>
+    @{
+        foreach (var item in @ViewBag.thoseProducts)
+        {
+            <div class="card" style="width: 20rem;">
+            @if(@item.Picture == null)
+            {
+                <a href="/product/@item.ProductId"><img src="~/images/noimage.png" alt="no image"></a>
+            }
+            else
+            {
+                <a href="/product/@item.ProductId"><img class="card-img-top" src="@item.Picture" alt="Card image cap"></a>            
+            }
+            <div class="card-block">
+                <h4 class="card-title">@item.Title</h4>
+                <p class="card-text">@item.Description</p>
+                <a href="/product/@item.ProductId" class="btn btn-primary">View</a>
+            </div>
+        </div>
+       }
+    }
+ </div>
