@@ -241,6 +241,7 @@ namespace sellwalker.Controllers
             }
         }
 
+// RENDER PRODUCTS CONTROL PAGE 
         [HttpGet]
         [Route("/products_control")]
         public IActionResult ProductsControl()
@@ -258,6 +259,7 @@ namespace sellwalker.Controllers
             }
         }
 
+//  DELETE METHOD FOR PRODUCT
         [HttpGet]
         [Route("/product/{productId}/delete")]
         public IActionResult deleteProduct(int productId)        
@@ -275,6 +277,8 @@ namespace sellwalker.Controllers
                 return RedirectToAction("ProductsControl");
             }
         }
+
+// RENDER PAGE FOR PRODUCT ALL USERS
     
         [HttpGet]
         [Route("/product/{productId}")]
@@ -312,6 +316,7 @@ namespace sellwalker.Controllers
             }
         }
 
+// RENDER EDIT PAGE FOR PRODUCT
         [HttpGet]
         [Route("/product/{productId}/edit")]
         public IActionResult ProductPageEdit(int productId)        
@@ -337,6 +342,7 @@ namespace sellwalker.Controllers
             }
         }
 
+// POST FOR EDIT PRODUCT ALL USERS
         [HttpPost]
         [Route("/product/edit/{productId}")]
         public async Task<IActionResult> EditProduct(ProductCheck check, int productId)        
@@ -383,6 +389,52 @@ namespace sellwalker.Controllers
                 }
             }
         }
+
+// CUSTOMERS CONTROLL ADMIN PAGE RENDER
+        [HttpGet]
+        [Route("/customers_control")]
+        public IActionResult CustomerssControl()
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                List<User> allUsers = _context.Users.Include(u=>u.products).ThenInclude(y=>y.Orders).ToList();
+                ViewBag.customers = allUsers;
+                return View("CustomerControl");
+            }
+        }
+
+// USER PAGE RENDER
+        [HttpGet]
+        [Route("/user/{userId}")]
+        public IActionResult UserPage(int userId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
+                ViewBag.thisUser = thisUser;
+
+                if(checkUserStatus() == false)
+                {
+                    return View("UserPage");
+                }
+                else
+                {
+                    return View("AdminUserPage");
+                }            
+            }
+        }
+
+
 
     }               
 }

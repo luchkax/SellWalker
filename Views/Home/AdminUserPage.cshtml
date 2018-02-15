@@ -1,0 +1,98 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/home">SellWalker</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+              <a href="/home">Feed</a>
+          </li>
+          <li ><a href="/add_product">Sell product <span class="sr-only">(current)</span></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"  aria-expanded="false"><span style="color: #377BB5">Control center</span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Customers and orders</a></li>
+              <li><a href="/products_control">Products control</a></li>
+              <li><a href="/customers_control">Customers control</a></li>
+            </ul>
+            <li><a href="/settings">Settings</a></li>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" style="color:black"></span> Cart</a></li>
+          </li>
+          <li><a href="/logout">Log out</a></li>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+    <div class="header">
+        <div class="card1 card-inverse" style="background-color: #333; border-color: #333;">
+            <div class="card-block1">
+                <h3 class="card-title">SellWalker</h3>
+                <p class="card-text">Have extra stuff? No problems! Sell. Just sell it!</p>
+                <a href="/add_product" class="btn btn-primary">Sell Product</a>
+            </div>
+        </div>
+    </div>
+    <div class="leftUser">
+        @if(@ViewBag.thisUser.ProfilePic != null){
+            <div class="UserPicture">
+                <img src="@ViewBag.thisUser.ProfilePic" alt="No image available">
+            </div>
+        }
+        else{
+            <div class="UserPicture">
+                <img src="~/images/Unknown.png" alt="No image available">
+            </div>
+        }
+    <div class="userInfo">
+        <h2>@ViewBag.thisUser.FirstName @ViewBag.thisUser.LastName </h2>
+        <a href="mailto:@ViewBag.thisUser.Email"><i class="glyphicon glyphicon-envelope"></i> Email</a> | <a href="#"><i class="glyphicon glyphicon-comment"></i> Message</a> | <a href="#"><i class="glyphicon glyphicon-pencil"></i> Write a Review</a>
+    </div>
+
+    </div>
+    <div class="rightUser">
+        <h2>See what @ViewBag.thisUser.FirstName selling</h2>
+        <div class="productsUser">
+            @{
+        foreach (var item in @ViewBag.thisUser.products)
+        {
+            <div class="card" style="width: 20rem;">
+            @if(@item.Picture == null)
+            {
+                <a href="/product/@item.ProductId"><img src="~/images/noimage.png" alt="no image"></a>
+            }
+            else
+            {
+                <a href="/product/@item.ProductId"><img class="card-img-top" src="@item.Picture" alt="Card image cap"></a>            
+            }
+            <div class="card-block">
+                <h4 class="card-title">@item.Title</h4>
+                <p class="card-text">@item.Description</p>
+                <a href="/product/@item.ProductId" class="btn btn-primary">View</a>
+            </div>
+        </div>
+       }
+    }
+        </div>
+    </div>
+

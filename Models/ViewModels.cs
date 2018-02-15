@@ -90,18 +90,25 @@ namespace sellwalker.Models
         [EmailAddress]
         public string Email{get;set;}
 
-        // [Required]
-        // [MinLength(8)]
-        // [DataType(DataType.Password)]
-        // public string Password{get;set;}
-
-        // [Required]
-        // [DataType(DataType.Password)]
-        // [Compare("Password")]
-        // public string ConfirmPassword{get;set;}
-
         public IFormFile ProfileImage {get;set;}
 
     }
+    public class UpdatePass : BaseEntity
+    {
+        [Required]
+        [MinLength(8)]
+        [DataType(DataType.Password)]
+        public string Password{get;set;}
 
+        [Required]
+        [MinLength(8)]
+        [DataType(DataType.Password)]
+        public string NewPassword{get;set;}
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("NewPassword")]
+        public string ConfirmNewPassword{get;set;}
+    }
+   
 }

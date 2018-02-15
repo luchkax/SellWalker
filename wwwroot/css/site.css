@@ -13,7 +13,15 @@ Write all of your CSS here
 }
 .left{
     width: 400px;
+    background-color: #F8F8F8;
     display: inline-block;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 5px;
+}
+.input{
+    margin-top: 15px;
+    /* margin-left: 30px; */
 }
 .right{
     width: 200px;
@@ -104,4 +112,45 @@ Write all of your CSS here
 }
 .card img{
     border-radius: 5px;
+}
+.mainCustomerControl{
+    width: 800px;
+    margin: 0px auto;
+}
+.mainCustomerControl h1{
+    margin-left: 120px;
+}
+.leftUser{
+    display: inline-block;
+    width:400px;
+    padding-left: 50px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    
+
+}
+.leftUser a{
+    text-decoration: none;
+
+}
+.leftUser img{
+    width: 270px;
+    max-height: 300px;
+    border-radius: 5px;
+
+}
+.rightUser{
+    display: inline-block;
+    width: 680px;
+    vertical-align: top;
+    margin-left: 20px;
+}
+.rightUser img{
+    width: 180px;
+    height: auto;
+}
+.rightUser h2{
+    margin-left: 160px;
 }

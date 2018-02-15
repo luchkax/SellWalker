@@ -20,11 +20,11 @@
           </li>
           <li ><a href="/add_product">Sell product <span class="sr-only">(current)</span></a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Controll center <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Control center <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Customers and orders</a></li>
-              <li><a href="products_control">Products control</a></li>
-              <li><a href="/#">Customers control</a></li>
+              <li><a href="/products_control">Products control</a></li>
+              <li><a href="/customer_control">Customers control</a></li>
             </ul>
             <li class="active"><a href="/settings">Settings</a></li>
           </li>
@@ -52,7 +52,8 @@
         
    
     <div class="left">
-        <br>
+        <!-- <br> -->
+        <h2>Main info</h2>
         <form asp-controller="Home" asp-action="UpdateInfo" method="post"  enctype="multipart/form-data">
             <div class="form-group">
               <label asp-for="FirstName">First Name</label>
@@ -67,36 +68,54 @@
               <input  asp-for="Email" class="form-control" id="Email" type="text" value="@ViewBag.userEmail">
               <span asp-validation-for="Email"></span>   
               <br>
-              <!-- <label asp-for="Password">Password</label>
-              <input asp-for="Password" class="form-control" id="Password" value="">
-              <span asp-validation-for="Password"></span>
-              <br>
-              <label asp-for="ConfirmPassword">Confirm password</label>
-              <input asp-for="ConfirmPassword" type="password" class="form-control" id="ConfirmPassword"/>
-              <span asp-validation-for="ConfirmPassword"></span> -->
             <br>
             <button type="submit" class="btn btn-default">Save</button>
-        <hr>
+         </div>
     </div>
-</div>
 
 <div class="right">
-        <label asp-for="ProfileImage"><h4>Profile picture</h4></label> 
-                <input  asp-for="ProfileImage" type="file" class="form-control" id="ProfileImage">
-                <span asp-validation-for="ProfileImage"></span>
-                <br>
+            <label asp-for="ProfileImage"><h4>Profile picture</h4></label> 
         @{
             if(@ViewBag.userPic != null)
             {
                  <img src="@ViewBag.userPic" alt="image">
+                <br>
+
             }
             else
             {
                 <p>Upload new picture</p>
                 <img src="~/images/Unknown.png" alt="image">
+                <br>
+
             }
         }
-        </form>
-        
+            <div class="input">
+
+                    <input  asp-for="ProfileImage" type="file" class="form-control" id="ProfileImage">
+                    <span asp-validation-for="ProfileImage"></span>
+            </div>
+        </div>
+    </form> 
+
+
+    <!-- <div class="passwordUser">
+        <form asp-controller="Home" asp-action="UpdateInfo" method="post">
+             <label asp-for="Password"></label>
+            <input asp-for="Password"/>
+            <span asp-validation-for="Password"></span>
+
+            <label asp-for="NewPassword"></label>
+            <input asp-for="NewPassword"/>
+            <span asp-validation-for="NewPassword"></span>
+
+            <br>
+            <label asp-for="ConfirmNewPassword">Confirm password</label>
+            <input asp-for="ConfirmNewPassword" type="password"/>
+            <span asp-validation-for="ConfirmNewPassword"></span>
+            <br>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form> -->
+
     </div>
-    </div>
+ 
