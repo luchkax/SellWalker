@@ -449,6 +449,7 @@ namespace sellwalker.Controllers
                 User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
 
                 ViewBag.thisUser = thisUser;
+                ViewBag.name = thisUser.FirstName+"'s";
                 return View("AdminEditUser");
             }
         }

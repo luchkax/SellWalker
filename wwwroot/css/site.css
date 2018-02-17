@@ -154,3 +154,19 @@ Write all of your CSS here
 .rightUser h2{
     margin-left: 160px;
 }
+.editUser{
+    width: 600px;
+    height: auto;
+    margin: 0px auto;
+    background-color: #F8F8F8;
+    padding: 0px 15px 15px 15px;
+    border-radius: 5px;
+}
+.editUser p{
+    display: inline-block;
+    margin-left: 5px;
+
+}
+.editUser h3{
+    display: inline-block;
+}

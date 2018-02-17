@@ -46,13 +46,17 @@
     </div><!-- /.container-fluid -->
   </nav>
   <div class="editUser">
-      <h1>Here you can edit @ViewBag.thisUser.FirstName 's account</h1>
+      <h1>Here you can edit @ViewBag.name account</h1>
       <h3>Name</h3><p>@ViewBag.thisUser.FirstName @ViewBag.thisUser.LastName</p>
+      <br>
+      
+      <h3>Email</h3><p>@ViewBag.thisUser.Email </p>
+
       <form asp-controller="Home" asp-action="EditUserPagePost" method="post">
           <div class="form-group">
               <label asp-for="Status"><h3>Change user status: </h3></label>
                 <select class="form-control" asp-for="Status" id="Status">
-                  <option value="@ViewBag.thisProduct.Status">@ViewBag.thisProduct.Status</option>
+                  <option value="@ViewBag.thisUser.Status">@ViewBag.thisUser.Status</option>
                   <option value="User">User</option>
                   <option value="Admin">Admin</option>
                 </select>
