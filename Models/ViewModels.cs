@@ -110,5 +110,10 @@ namespace sellwalker.Models
         [Compare("NewPassword")]
         public string ConfirmNewPassword{get;set;}
     }
+     public class UpdateUserInfo : BaseEntity
+    {
+        [Required]
+        public string Status{get;set;}
+    }
    
 }

@@ -435,6 +435,23 @@ namespace sellwalker.Controllers
         }
 
 
+        [HttpGet]
+        [Route("/user/{userId}/edit")]
+        public IActionResult EditUserPage(int userId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
+
+                ViewBag.thisUser = thisUser;
+                return View("AdminEditUser");
+            }
+        }
 
     }               
 }

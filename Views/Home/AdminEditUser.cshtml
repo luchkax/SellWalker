@@ -1,0 +1,64 @@
+@model sellwalker.Models.UpdateUserInfo
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/home">SellWalker</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+              <a href="/home">Feed</a>
+          </li>
+          <li ><a href="/add_product">Sell product <span class="sr-only">(current)</span></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"  aria-expanded="false"><span style="color: #377BB5">Control center</span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Customers and orders</a></li>
+              <li><a href="/products_control">Products control</a></li>
+              <li class="active"><a href="/customers_control">Customers control</a></li>
+            </ul>
+            <li><a href="/settings">Settings</a></li>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" style="color:black"></span> Cart</a></li>
+          </li>
+          <li><a href="/logout">Log out</a></li>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="editUser">
+      <h1>Here you can edit @ViewBag.thisUser.FirstName 's account</h1>
+      <h3>Name</h3><p>@ViewBag.thisUser.FirstName @ViewBag.thisUser.LastName</p>
+      <form asp-controller="Home" asp-action="EditUserPagePost" method="post">
+          <div class="form-group">
+              <label asp-for="Status"><h3>Change user status: </h3></label>
+                <select class="form-control" asp-for="Status" id="Status">
+                  <option value="@ViewBag.thisProduct.Status">@ViewBag.thisProduct.Status</option>
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                </select>
+          </div>
+            <br>
+        <button type="submit" class="btn btn-primary">Done</button>
+      </form>
+      
+  </div>
