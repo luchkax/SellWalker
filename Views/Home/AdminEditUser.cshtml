@@ -45,14 +45,15 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+  @TempData["error"]
   <div class="editUser">
       <h1>Here you can edit @ViewBag.name account</h1>
       <h3>Name</h3><p>@ViewBag.thisUser.FirstName @ViewBag.thisUser.LastName</p>
       <br>
-      
+
       <h3>Email</h3><p>@ViewBag.thisUser.Email </p>
 
-      <form asp-controller="Home" asp-action="EditUserPagePost" method="post">
+      <form asp-controller="Home" asp-action="EditUserStatus" method="post">
           <div class="form-group">
               <label asp-for="Status"><h3>Change user status: </h3></label>
                 <select class="form-control" asp-for="Status" id="Status">
@@ -62,7 +63,7 @@
                 </select>
           </div>
             <br>
-        <button type="submit" class="btn btn-primary">Done</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </form>
       
   </div>

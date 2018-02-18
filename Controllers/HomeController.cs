@@ -434,7 +434,7 @@ namespace sellwalker.Controllers
             }
         }
 
-
+// EDIT PAGE ADMIN RENDER
         [HttpGet]
         [Route("/user/{userId}/edit")]
         public IActionResult EditUserPage(int userId)
@@ -451,6 +451,41 @@ namespace sellwalker.Controllers
                 ViewBag.thisUser = thisUser;
                 ViewBag.name = thisUser.FirstName+"'s";
                 return View("AdminEditUser");
+            }
+        }
+
+// POST FOR SAVING CHANGES ON ADMIN EDIT PAGE
+        [HttpPost]
+        [Route("/editstatus/{userId}")]
+        public IActionResult EditUserStatus(UpdateUserInfo check, int userId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
+                if(thisUser.UserId != 1)
+                {
+                    if(ModelState.IsValid){
+                        thisUser.Status = check.Status;
+                        _context.SaveChanges();
+                        TempData["error"] = "User Status Changed successfully!";
+                        return RedirectToAction("EditUserPage");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Inputs invalid!";
+                        return RedirectToAction("EditUserPage");
+                    }
+                }
+                else
+                {
+                    TempData["error"] = "You cannot change status of this user!";
+                    return RedirectToAction("EditUserPage");
+                }
             }
         }
 
