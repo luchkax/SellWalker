@@ -169,4 +169,5 @@ Write all of your CSS here
 }
 .editUser h3{
     display: inline-block;
+    color: grey;
 }

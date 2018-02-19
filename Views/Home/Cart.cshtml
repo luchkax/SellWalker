@@ -1,0 +1,11 @@
+@{
+    if(@ViewBag.Status == "Admin")
+    {
+        @Html.Partial("AdminPartial");
+    }
+    else
+    {
+        @Html.Partial("UserPartial");
+    }
+}
+<h1></h1>

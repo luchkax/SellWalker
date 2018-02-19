@@ -488,6 +488,56 @@ namespace sellwalker.Controllers
                 }
             }
         }
+        [HttpGet]
+        [Route("/addtocart/product/productId")]
+        public IActionResult AddToCart(int productId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
+                if(thisOrderItem != null){
+                    return RedirectToAction("ProductPage");
+                }
+                else
+                {
+                    Order newOrder = new Order{
+                        UserId = (int)id,
+                        ProductId = productId,
+                        Quantity = 1,
+                        CreatedAt = DateTime.Now
+                    };
+                    _context.Add(newOrder);
+                    _context.SaveChanges();
+                    return RedirectToAction("CartPage");
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("/cart")]
+        public IActionResult CartPage()
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                User user = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
+
+                ViewBag.Status = user.Status;
+                ViewBag.User = user;
+                // Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
+                return View("Cart");
+            }
+        }
+
 
     }               
 }
