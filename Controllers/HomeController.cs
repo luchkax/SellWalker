@@ -414,7 +414,7 @@ namespace sellwalker.Controllers
             }
         }
 
-// USER PAGE RENDER
+// RENDER USER PAGE
         [HttpGet]
         [Route("/user/{userId}")]
         public IActionResult UserPage(int userId)
