@@ -225,3 +225,34 @@
 #custom-search-input .glyphicon-search{
     font-size: 23px;
 }
+.tableCart{
+    width: 800px;
+    margin: 0px auto;
+
+}
+.tableCart img{
+    max-width: 100px;
+    height:auto;
+    display: inline-block;
+}
+.tableCart h3{
+    display: inline-block;
+    margin-left: 50px;
+}
+.priceCart{
+    display: inline-block;
+    color: gray; 
+    margin-left: 120px;
+}
+.sellerCart{
+    display: inline-block;
+    padding-top: 10px;
+}
+.deleteCart{
+    display: inline-block;
+    margin-left: 672px;
+}
+.checkoutCart{
+    margin-left: 696px;
+    display: inline-block;
+}

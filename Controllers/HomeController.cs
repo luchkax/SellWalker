@@ -309,6 +309,7 @@ namespace sellwalker.Controllers
                 ViewBag.thoseProducts = thoseProducts;
                 ViewBag.thisSeller = thisSeller;
                 ViewBag.thisProduct = thisProduct;
+                ViewBag.loggedID = id;
 
                 if(checkUserStatus() == false)
                 {
@@ -505,6 +506,7 @@ namespace sellwalker.Controllers
             {
                 int? id = HttpContext.Session.GetInt32("userId");
                 Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
+                // Product myProduct = _context.Products.Where(u=>u.UserId == id).SingleOrDefault();
                 if(thisOrderItem != null){
                     return RedirectToAction("ProductPage");
                 }
@@ -520,6 +522,25 @@ namespace sellwalker.Controllers
                     _context.SaveChanges();
                     return RedirectToAction("CartPage");
                 }
+            }
+        }
+
+        [HttpGet]
+        [Route("/deleteCart/{productId}")]
+        public IActionResult DeleteFromCart(int productId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                Order order = _context.Orders.Where(u=>u.UserId == id).Where(p=>p.ProductId == productId).SingleOrDefault();
+                _context.Orders.Remove(order);
+                _context.SaveChanges();
+
+                return RedirectToAction("HomePage");
             }
         }
 

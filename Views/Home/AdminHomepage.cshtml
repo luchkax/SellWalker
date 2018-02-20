@@ -21,7 +21,7 @@
         <li class="active">
             <a href="/home">Feed<span class="sr-only">(current)</span></a>
         </li>
-        <li><a href="/add_product">Sell product</a></li>
+        <li><a href="/my_products">My Products</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Control center <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -92,6 +92,7 @@
               }
               <div class="card-block">
                   <h4 class="card-title">@item.Title</h4>
+                  <p><span class="label label-success">$@item.Price</span></p>                  
                   <p class="card-text">@item.Description</p>
                   <a href="/product/@item.ProductId" class="btn btn-primary">View</a>
               </div>
