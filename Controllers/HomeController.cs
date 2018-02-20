@@ -64,6 +64,11 @@ namespace sellwalker.Controllers
             else
             {   
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                List<Product> allProducts = _context.Products.Include(o=>o.Orders).OrderByDescending(h=>h.CreatedAt).ToList();
+                User all = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
+
+                ViewBag.all = all;
+                ViewBag.allProd = allProducts;
                 ViewBag.name = exists.FirstName;
                 if(checkUserStatus() == false)
                 {

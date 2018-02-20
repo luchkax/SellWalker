@@ -47,6 +47,32 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<h2>Hi @ViewBag.name</h2>
 @TempData["error"]
+<h2>Hello, @ViewBag.name</h2>
+<div class="mainHome">
+  <div class="upperHome">
+    <div class="productHome">
+              @{
+          foreach (var item in @ViewBag.allProd)
+          {
+              <div class="card" style="width: 20rem;">
+              @if(@item.Picture == null)
+              {
+                  <a href="/product/@item.ProductId"><img src="~/images/noimage.png" alt="no image"></a>
+              }
+              else
+              {
+                  <a href="/product/@item.ProductId"><img class="card-img-top" src="@item.Picture" alt="Card image cap"></a>            
+              }
+              <div class="card-block">
+                  <h4 class="card-title">@item.Title</h4>
+                  <p class="card-text">@item.Description</p>
+                  <a href="/product/@item.ProductId" class="btn btn-primary">View</a>
+              </div>
+          </div>
+        }
+      }
+          </div>
+  </div>
+</div>
 
