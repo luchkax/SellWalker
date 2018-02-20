@@ -488,8 +488,8 @@ namespace sellwalker.Controllers
                 }
             }
         }
-        [HttpGet]
-        [Route("/addtocart/product/productId")]
+        [HttpPost]
+        [Route("/addtocart/product/{productId}")]
         public IActionResult AddToCart(int productId)
         {
             if(checkLogStatus() == false)
@@ -530,9 +530,9 @@ namespace sellwalker.Controllers
             {
                 int? id = HttpContext.Session.GetInt32("userId");
                 User user = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
-
+                List<Order> orders = _context.Orders.Where(a=>a.UserId == id).Include(o=>o.product).ToList();
                 ViewBag.Status = user.Status;
-                ViewBag.User = user;
+                ViewBag.Orders = orders;
                 // Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
                 return View("Cart");
             }

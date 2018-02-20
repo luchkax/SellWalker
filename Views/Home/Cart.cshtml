@@ -8,4 +8,10 @@
         @Html.Partial("UserPartial");
     }
 }
-<h1></h1>
+@{
+    foreach (var item in @ViewBag.Orders)
+    {
+        <h1>@item.product.Title</h1>  
+        <p>@item.Buyer.FirstName</p>      
+    }
+}

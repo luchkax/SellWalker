@@ -1,4 +1,4 @@
-Write all of your CSS here
+
 .page-header h1 {
     margin-left: 105px; 
 }
@@ -6,6 +6,11 @@ Write all of your CSS here
 .addproduct {
     width: 400px;
     margin: 0px auto;
+}
+.main{
+    background-color: #F8F8F8;
+    padding: 1px 15px 15px 15px;
+    border-radius: 5px;
 }
 
 .mainSettings h1{
