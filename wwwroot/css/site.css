@@ -278,3 +278,132 @@
 .leftSearch{
     width: 750px;
 }
+/* .login{
+    margin-left: 300px;
+} */
+
+@import "compass/css3";
+
+* { box-sizing: border-box; margin: 0; padding:0; }
+  .login-wrap {
+    position: relative;
+    margin: 0 auto;
+    background: #ecf0f1;
+    width: 350px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px #333;
+    padding: 15px;
+  }
+    .login h2 {
+      text-align: center;
+      font-weight: 200;
+      font-size: 2em;
+      margin-top: 10px;
+      color: #34495e;
+    }
+    
+    .form {
+      padding-top: 20px;
+    }
+      .login button {
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        height: 40px;
+        border-radius: 5px;
+        outline: 0;
+        -moz-outline-style: none;
+      }
+      
+      .login input[type="text"],
+      .login input[type="password"] {
+        border: 1px solid #bbb;
+        padding: 0 0 0 10px;
+        font-size: 14px;
+      }
+      
+      .login a {
+        text-align: center;
+        font-size: 10px;
+        color: #3498db;
+      }
+      .login p{
+          padding-bottom: 10px;
+        }
+        
+      
+    .login button {
+        background: #333333;
+        border:none;
+        color: white;
+        font-size: 18px;
+        font-weight: 200;
+        cursor: pointer;
+        transition: box-shadow .4s ease;
+    }
+    .main{
+        margin-top: 70px;
+   }
+   
+   .register h1.title { 
+       font-size: 50px;
+       font-family: 'Passion One', cursive; 
+       font-weight: 400; 
+   }
+   
+   .register hr{
+       width: 10%;
+       color: #fff;
+   }
+   
+   .form-group{
+       margin-bottom: 15px;
+   }
+   
+   .register  label{
+       margin-bottom: 15px;
+   }
+   
+   .register  input,
+   .register  input::-webkit-input-placeholder {
+       font-size: 11px;
+       padding-top: 3px;
+   }
+   
+   .main-login{
+        background-color: #ECF0F1;
+       /* shadows and rounded borders */
+       -moz-border-radius: 2px;
+       -webkit-border-radius: 2px;
+       border-radius: 2px;
+       -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+       -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+   
+   }
+   
+   .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        max-width: 330px;
+       padding: 40px 40px;
+   
+   }
+   
+   .login-button{
+       margin-top: 5px;
+   }
+   
+   .login-register{
+       font-size: 11px;
+       text-align: center;
+   }
+   .register button{
+    background: #333333;
+   }
+   .register h1{
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       margin-left: 390px;
+   }
+  

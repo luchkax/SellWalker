@@ -55,7 +55,15 @@
     foreach (var item in @ViewBag.searchRes)
     {
         <div class="objCart">
-            <a href="/product/@item.ProductId"><img src="@item.Picture" alt=""></a>
+        @if(@item.Picture == null)
+           {
+                <a href="/product/@item.ProductId"><img src="~/images/noimage.png" alt="no image"></a>
+            }
+         else
+            {
+                <a href="/product/@item.ProductId"><img src="@item.Picture" alt=""></a>
+              }
+            
             <div class="subObj">
                 <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
                     <h3><a href="/product/@item.ProductId" title="">@item.Title</a></h3>
@@ -65,10 +73,10 @@
                 </div>
             </div>
         </div>
-        <hr>
-		
+		<hr>
         
     }
+    
 }
 
 </div>

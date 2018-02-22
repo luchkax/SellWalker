@@ -27,20 +27,22 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<h1>Login</h1>
-<hr>
-<form asp-controller="User" asp-action="Login" method="post">
-    <span asp-validation-for="Email"></span>
-    <label asp-for="Email"></label>
-    <input asp-for="Email"/>
-    @ViewBag.email
-    <br>
-    <span asp-validation-for="Password"></span>
-    <label asp-for="Password"></label>
-    <input asp-for="Password"/>
-    @ViewBag.password
-    <br>
-    <button type="submit">Login</button>
-</form>
-<hr>
+<div class="login">
+      <div class="login-wrap">
+      <h2>Login</h2>
+      
+      <form asp-controller="User" asp-action="Login" method="post">
+        <br>
+        <input  asp-for="Email" type="text" placeholder="Email"/> 
+        <span asp-validation-for="Email"></span>
+        @ViewBag.email
+        <input asp-for="Password" type="password" placeholder="Password" />
+        <span asp-validation-for="Password"></span>
+        @ViewBag.password
+        <button type="submit">Sign in </button>
+      </form>
+        <a href="/"> <p> Don't have an account? Register </p></a>
+      </div>
+    </div>
+    <hr>
+</div>

@@ -44,6 +44,7 @@ namespace dojoTest.Controllers
             }
             else
             {   
+                
                 return RedirectToAction("Homepage", "Home");
             }    
         }
@@ -57,6 +58,7 @@ namespace dojoTest.Controllers
                 User exists = _context.Users.SingleOrDefault(user=>user.Email == regUser.Email);
                 if(exists !=null)
                 {
+                    ViewBag.error = "ERRRO exists";
                     ModelState.AddModelError("Email", "An account with this email already exists!");
                     return View("Register");
                 }
@@ -89,6 +91,7 @@ namespace dojoTest.Controllers
             }
             else
             {
+                ViewBag.error = "ERROR";
                 return View("Register");
             }
         }

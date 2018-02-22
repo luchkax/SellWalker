@@ -27,34 +27,68 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<h1>Registration</h1>
-<hr>
-<form asp-controller="User" asp-action="Register" method="post">
-    <label asp-for="FirstName">First Name</label>
-    <input asp-for="FirstName"/>
-    <span asp-validation-for="FirstName"></span>
+@ViewBag.error
+<div class="register">
+  <h1>Welcome to SellWalker</h1>
+  <br>
+  <div class="main-login main-center">
+            <form asp-controller="User" asp-action="Register" method="post" class="form-horizontal">
+              <div class="form-group">
+                <label asp-for="FirstName" class="cols-sm-2 control-label">First Name</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span asp-validation-for="FirstName" class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input asp-for="FirstName" type="text" class="form-control"  placeholder="Enter your Name"/>
+                  </div>
+                </div>
+              </div>
 
-    <br>
-    <label asp-for="LastName">Last Name</label>
-    <input asp-for="LastName"/>
-    <span asp-validation-for="LastName"></span>
-    <br>
-    <label asp-for="Email"></label>
-    <input asp-for="Email"/>
-    <span asp-validation-for="Email"></span>
+              <div class="form-group">
+                <label asp-for="LastName" class="cols-sm-2 control-label">Last Name</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span asp-validation-for="LastName" class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input asp-for="LastName" type="text" class="form-control" placeholder="Enter your Last Name"/>
+                  </div>
+                </div>
+              </div>
 
-    <br>
-    <label asp-for="Password"></label>
-    <input asp-for="Password"/>
-    <span asp-validation-for="Password"></span>
+              <div class="form-group">
+                <label asp-for="Email" class="cols-sm-2 control-label">Email</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span asp-validation-for="Email" class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></i></span>
+                    <input asp-for="Email" type="text" class="form-control"  placeholder="Enter your Email"/>
+                  </div>
+                </div>
+              </div>
 
-     <br>
-    <label asp-for="ConfirmPassword">Confirm password</label>
-    <input asp-for="ConfirmPassword" type="password"/>
-    <span asp-validation-for="ConfirmPassword"></span>
+              <div class="form-group">
+                <label asp-for="Password" class="cols-sm-2 control-label">Password</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span asp-validation-for="Password" class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter your Password"/>
+                  </div>
+                </div>
+              </div>
 
-    <br>
-    <button type="submit">Register</button>
-</form>
-<hr>
-<h3>Already registered? <a href="/login">Log In!</a></h3>
+              <div class="form-group">
+                <label asp-for="ConfirmPassword" class="cols-sm-2 control-label">Confirm Password</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span asp-validation-for="ConfirmPassword" class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control"  placeholder="Confirm your Password"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+              </div>
+          </form>
+              <div class="login-register">
+                      <a href="/login">Already registered? Login</a>
+                  </div>
+          </div>
+</div>
