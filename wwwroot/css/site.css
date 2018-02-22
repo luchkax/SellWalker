@@ -61,7 +61,7 @@
 .picture img{
     border-radius: 10px;
     height: 350px;
-    max-width: 500px;
+    max-width: 440px;
 }
 .header{
     color: white;
@@ -93,6 +93,7 @@
 .picture{
     display: inline-block;
 }
+
 .content{
     display: inline-block;
     vertical-align: top;
@@ -105,6 +106,7 @@
     display: inline-block;
     margin-bottom: 5px;
 }
+
 .content a{
     text-decoration: none;
 }
@@ -255,4 +257,24 @@
 .checkoutCart{
     margin-left: 696px;
     display: inline-block;
+}
+.objCart{
+    margin-top: 20px;
+}
+.objCart img{
+    display: inline-block;
+    max-width: 150px;
+    height: auto;
+    vertical-align: top;
+    margin-top: 30px;
+    margin-right: 15px;
+}
+.subObj{
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+    
+}
+.leftSearch{
+    width: 750px;
 }
