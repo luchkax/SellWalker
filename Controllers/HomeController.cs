@@ -564,6 +564,35 @@ namespace sellwalker.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("/search")]
+        public IActionResult SearchProduct(string result)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                if(result != null)
+                {
+                    List<Product> searchProduct = _context.Products.Where(n=>n.Title.ToLower().Contains(result.ToLower())).Include(o=>o.Orders).ToList();
+                    if(searchProduct.Count < 1)
+                    {
+                        ViewBag.error = "There are no products with the name " + result;
+                    }
+                    ViewBag.searchRes = searchProduct;
+                    return View("SearchPage");
+                }
+                else
+                {
+                    ViewBag.error = "Please give the product name you want ot search";
+                    return RedirectToAction("HomePage");
+                }
+
+                
+            }
+        }
 
     }               
 }

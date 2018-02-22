@@ -56,10 +56,10 @@
   <br>
 <h2 style="margin-left: 230px;">Hello, @ViewBag.name! Here are the latest products selling</h2>
   <div class="searchHome">
-    <form asp-controller="Home" asp-action="productAdd">
+    <form asp-controller="Home" asp-action="SearchProduct" method="POST">
     <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="e.g. iPhone 8 Plus" />
+                    <input type="text" name="searchData" class="form-control input-lg" placeholder="e.g. iPhone 8 Plus" />
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
