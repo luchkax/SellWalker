@@ -58,6 +58,7 @@
             <th>ID</th>
             <th>Product name</th>
             <th>Date posted</th>
+            <th>Status</th>
             <th>Seller</th>
             <th>Price</th>
             <th>Actions</th>
@@ -71,6 +72,7 @@
             <td>@item.ProductId</td>
             <td><a href="/product/@item.ProductId">@item.Title</a></td>
             <td>@item.CreatedAt</td>
+            <td>@item.Status</td>
             <td><a href="/user/@item.UserId">@item.Seller.FirstName</a></td>
             <td>$@item.Price</td>
             <td><a href="/product/@item.ProductId/delete"> Delete</a> | <a href="/product/@item.ProductId/edit">Edit</a></td>

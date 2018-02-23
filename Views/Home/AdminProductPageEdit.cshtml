@@ -89,6 +89,14 @@
                 <span asp-validation-for="Price"></span> 
               </div>
               <br>  
+                <label asp-for="Status">Status:</label>
+                <select class="form-control" asp-for="Status" id="Status">
+                  <option value="@ViewBag.thisProduct.Status">@ViewBag.thisProduct.Status</option>
+                  <option value="Active">Active</option>
+                  <option value="InCart">InCart</option>
+                  <option value="Sold">Sold</option>
+                </select>
+                <br>
               <label asp-for="Image">Image</label>
               <input  asp-for="Image" type="file" class="form-control" id="Image">
               <span asp-validation-for="Image"></span>

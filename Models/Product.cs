@@ -12,6 +12,7 @@ namespace sellwalker.Models
         public string Description{get;set;}
         public decimal Price{get;set;}
         public string Picture { get; set; }
+        public string Status { get; set; }
         public DateTime CreatedAt{get;set;}
         public List<Order> Orders {get; set;}
         public Product()

@@ -79,6 +79,9 @@ namespace dojoTest.Controllers
                     User user = _context.Users.Where(u=>u.Email == regUser.Email).SingleOrDefault();
                     HttpContext.Session.SetInt32("userId", user.UserId);
                     HttpContext.Session.SetString("user", user.FirstName);
+                    user.ReviewedId = user.UserId;
+                    _context.SaveChanges();
+                    
                     if(user.Status == "Admin")
                     {
                        return RedirectToAction("HomepageAdmin", "Home");

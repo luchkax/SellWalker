@@ -8,9 +8,10 @@ using sellwalker.Models;
 namespace sellwalker.Migrations
 {
     [DbContext(typeof(SellContext))]
-    partial class SellContextModelSnapshot : ModelSnapshot
+    [Migration("20180223222224_AddedReviews1")]
+    partial class AddedReviews1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

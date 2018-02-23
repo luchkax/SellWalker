@@ -70,6 +70,7 @@ namespace sellwalker.Models
         [Required]
         public decimal Price{get;set;}
 
+        public string Status {get;set;}
         public IFormFile Image { get; set; }
     }
 
@@ -114,6 +115,8 @@ namespace sellwalker.Models
     {
         [Required]
         public string Status{get;set;}
+
+        public int ReviewedId{get;set;}
     }
    
 }

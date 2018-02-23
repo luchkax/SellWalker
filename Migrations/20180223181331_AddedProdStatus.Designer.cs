@@ -8,9 +8,10 @@ using sellwalker.Models;
 namespace sellwalker.Migrations
 {
     [DbContext(typeof(SellContext))]
-    partial class SellContextModelSnapshot : ModelSnapshot
+    [Migration("20180223181331_AddedProdStatus")]
+    partial class AddedProdStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -66,26 +67,6 @@ namespace sellwalker.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("sellwalker.Models.Review", b =>
-                {
-                    b.Property<int>("ReviewId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int>("ReviewedId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("ReviewId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
-                });
-
             modelBuilder.Entity("sellwalker.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -100,8 +81,6 @@ namespace sellwalker.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("ProfilePic");
-
-                    b.Property<int>("ReviewedId");
 
                     b.Property<string>("Status");
 
@@ -127,14 +106,6 @@ namespace sellwalker.Migrations
                 {
                     b.HasOne("sellwalker.Models.User", "Seller")
                         .WithMany("products")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("sellwalker.Models.Review", b =>
-                {
-                    b.HasOne("sellwalker.Models.User", "Reviewer")
-                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -65,7 +65,7 @@ namespace sellwalker.Controllers
             {   
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
                 ViewBag.user = id;
-                List<Product> allProducts = _context.Products.Include(o=>o.Orders).OrderByDescending(h=>h.CreatedAt).ToList();
+                List<Product> allProducts = _context.Products.Where(s=>s.Status != "Sold").Include(o=>o.Orders).OrderByDescending(h=>h.CreatedAt).ToList();
                 User all = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
 
                 ViewBag.all = all;
@@ -129,7 +129,8 @@ namespace sellwalker.Controllers
                         Price = check.Price,  
                         UserId = (int)id,
                         CreatedAt = DateTime.Now,
-                        Condition = check.Condition
+                        Condition = check.Condition,
+                        Status = "Active"
                     };
                     var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "uploaded_images");
                     if (check.Image != null)
@@ -377,6 +378,7 @@ namespace sellwalker.Controllers
                     thisProduct.Description = check.Description;
                     thisProduct.Price = check.Price;
                     thisProduct.Condition = check.Condition;
+                    thisProduct.Status = check.Status;
                     var uploadDestination = Path.Combine(_hostingEnvironment.WebRootPath, "uploaded_images");
                     if (check.Image != null)
                     {
@@ -491,6 +493,7 @@ namespace sellwalker.Controllers
                 {
                     if(ModelState.IsValid){
                         thisUser.Status = check.Status;
+                        thisUser.ReviewedId = check.ReviewedId;
                         _context.SaveChanges();
                         TempData["error"] = "User Status Changed successfully!";
                         return RedirectToAction("EditUserPage");
@@ -522,26 +525,28 @@ namespace sellwalker.Controllers
             {
                 int? id = HttpContext.Session.GetInt32("userId");
                 Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
+                Product thisProductItem = _context.Products.Where(p=>p.ProductId == productId).SingleOrDefault();
                 // Product myProduct = _context.Products.Where(u=>u.UserId == id).SingleOrDefault();
                 if(thisOrderItem != null){
                     return RedirectToAction("ProductPage");
                 }
                 else
-                {
-                    Order newOrder = new Order{
-                        UserId = (int)id,
-                        ProductId = productId,
-                        Quantity = 1,
-                        CreatedAt = DateTime.Now
-                    };
-                    _context.Add(newOrder);
-                    _context.SaveChanges();
-                    return RedirectToAction("CartPage");
+                {                    
+                        thisProductItem.Status = "InCart";  
+                        Order newOrder = new Order{
+                            UserId = (int)id,
+                            ProductId = productId,
+                            Quantity = 1,
+                            CreatedAt = DateTime.Now
+                        };
+                        _context.Add(newOrder);
+                        _context.SaveChanges();
+                        return RedirectToAction("CartPage");
                 }
             }
         }
 
-//GET DELETE PRODUCT
+//GET DELETE PRODUCT FROM CART
         [HttpGet]
         [Route("/deleteCart/{productId}")]
         public IActionResult DeleteFromCart(int productId)
@@ -553,6 +558,8 @@ namespace sellwalker.Controllers
             else
             {
                 int? id = HttpContext.Session.GetInt32("userId");
+                Product thisProductItem = _context.Products.Where(p=>p.ProductId == productId).SingleOrDefault();
+                thisProductItem.Status = "Active";
                 Order order = _context.Orders.Where(u=>u.UserId == id).Where(p=>p.ProductId == productId).SingleOrDefault();
                 _context.Orders.Remove(order);
                 _context.SaveChanges();
@@ -610,10 +617,73 @@ namespace sellwalker.Controllers
                     ViewBag.error = "Please give the product name you want ot search";
                     return RedirectToAction("HomePage");
                 }
-
-                
             }
         }
+
+        [HttpGet]
+        [Route("/purchase/{productId}")]
+        public IActionResult Purchase (int productId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                 int? id = HttpContext.Session.GetInt32("userId");
+                Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
+                Order thisOrderItem = _context.Orders.Where(u=>u.UserId == id).Where(y=>y.ProductId == productId).SingleOrDefault();
+                if(thisProduct.Status == "InCart")
+                {
+                    thisProduct.Status = "Sold";
+                    _context.Orders.Remove(thisOrderItem);
+                    _context.SaveChanges();
+                    return RedirectToAction("HomePage");
+                }
+                else
+                {
+                    ViewBag.error = "Error occured. Contact your administrator.";
+                    return RedirectToAction("CartPage");
+                }
+            }
+        }
+
+        [HttpPost]
+        [Route("/create_review/{userId}")]
+        public IActionResult CreateReview(Review check, int userId)
+        {
+            if(checkLogStatus() == false)
+            {
+                return RedirectToAction("LoginPage", "User");                           
+            }
+            else
+            {
+                int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
+                if(ModelState.IsValid && userId != id)
+                {
+                    User reviewed = _context.Users.Where(u=>u.UserId == userId).SingleOrDefault();
+                    User reviewer = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                    Review newReview = new Review
+                    {
+                        Content = check.Content,
+                        CreatedAt = DateTime.Now,
+                        UserId = reviewer.UserId,
+                        ReviewedId = reviewed.ReviewedId
+                    };
+                    _context.Add(newReview);
+                    _context.SaveChanges();
+
+                    return RedirectToAction("UserPage");
+                }
+                else
+                {
+                    ViewBag.error = "Input incorrect";
+                    return RedirectToAction("UserPage");
+                }
+            }
+        }
+
 
     }               
 }

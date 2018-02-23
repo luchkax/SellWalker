@@ -88,6 +88,7 @@
         <hr>
         <a href="/user/@ViewBag.thisProduct.Seller.UserId"><h3><img src="@ViewBag.thisSeller.ProfilePic">  @ViewBag.thisProduct.Seller.FirstName</h3></a>
         <p><a href="mailto:@ViewBag.thisSeller.Email"> <i class="glyphicon glyphicon-envelope"></i> Email</p></a> | <a href="#">Message</a>
+        
         @{
             if(@ViewBag.thisProduct.UserId != @ViewBag.loggedID){
                 <form asp-controller="Home" asp-action="AddToCart" method="post">
