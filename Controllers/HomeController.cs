@@ -64,12 +64,14 @@ namespace sellwalker.Controllers
             else
             {   
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                ViewBag.user = id;
                 List<Product> allProducts = _context.Products.Include(o=>o.Orders).OrderByDescending(h=>h.CreatedAt).ToList();
                 User all = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
 
                 ViewBag.all = all;
                 ViewBag.allProd = allProducts;
                 ViewBag.name = exists.FirstName;
+                
                 if(checkUserStatus() == false)
                 {
                     return View("Homepage");
@@ -92,6 +94,8 @@ namespace sellwalker.Controllers
             }
             else
             {
+                User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                ViewBag.user = id;
                 if(checkUserStatus() == false)
                 {
                     return View("NewProduct");
@@ -160,6 +164,7 @@ namespace sellwalker.Controllers
             else
             {
                 User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                ViewBag.user = id;
                 ViewBag.userFirst = exists.FirstName;
                 ViewBag.userLast = exists.LastName;
                 ViewBag.userEmail = exists.Email;
@@ -258,6 +263,8 @@ namespace sellwalker.Controllers
             }
             else
             {
+                User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                ViewBag.user = id;
                 List<Product> allProducts = _context.Products.Include(u=>u.Seller).OrderBy(y=>y.Title).ToList();
                 ViewBag.products = allProducts;
                 return View("ProductsControl");
@@ -296,6 +303,8 @@ namespace sellwalker.Controllers
             }
             else
             {
+                User exists = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                ViewBag.user = id;
                 Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
                 User thisSeller = _context.Users.Where(a=>a.UserId == thisProduct.UserId).SingleOrDefault();
                 List<Product> thoseProducts = _context.Products.Where(r=>r.UserId == thisSeller.UserId).ToList();
@@ -334,6 +343,7 @@ namespace sellwalker.Controllers
             else
             {   
                 int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
                 ViewBag.thisProduct = thisProduct;
                 ViewBag.title = thisProduct.Title;
@@ -362,6 +372,7 @@ namespace sellwalker.Controllers
                 Product thisProduct = _context.Products.Where(a=>a.ProductId == productId).SingleOrDefault();
                 if(ModelState.IsValid)
                 {
+                
                     thisProduct.Title = check.Title;
                     thisProduct.Description = check.Description;
                     thisProduct.Price = check.Price;
@@ -396,7 +407,7 @@ namespace sellwalker.Controllers
             }
         }
 
-// CUSTOMERS CONTROLL ADMIN PAGE RENDER
+// RENDER CUSTOMERS CONTROLL ADMIN PAGE
         [HttpGet]
         [Route("/customers_control")]
         public IActionResult CustomerssControl()
@@ -408,6 +419,7 @@ namespace sellwalker.Controllers
             else
             {
                 int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 List<User> allUsers = _context.Users.Include(u=>u.products).ThenInclude(y=>y.Orders).ToList();
                 ViewBag.customers = allUsers;
                 return View("CustomerControl");
@@ -426,6 +438,7 @@ namespace sellwalker.Controllers
             else
             {
                 int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
                 ViewBag.thisUser = thisUser;
 
@@ -440,7 +453,7 @@ namespace sellwalker.Controllers
             }
         }
 
-// EDIT PAGE ADMIN RENDER
+// RENDER EDIT PAGE ADMIN
         [HttpGet]
         [Route("/user/{userId}/edit")]
         public IActionResult EditUserPage(int userId)
@@ -452,6 +465,7 @@ namespace sellwalker.Controllers
             else
             {
                 int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
 
                 ViewBag.thisUser = thisUser;
@@ -494,6 +508,8 @@ namespace sellwalker.Controllers
                 }
             }
         }
+
+// POST ADD TO CART PRODUCT 
         [HttpPost]
         [Route("/addtocart/product/{productId}")]
         public IActionResult AddToCart(int productId)
@@ -525,6 +541,7 @@ namespace sellwalker.Controllers
             }
         }
 
+//GET DELETE PRODUCT
         [HttpGet]
         [Route("/deleteCart/{productId}")]
         public IActionResult DeleteFromCart(int productId)
@@ -544,6 +561,7 @@ namespace sellwalker.Controllers
             }
         }
 
+// RENDER CART ALL USERS
         [HttpGet]
         [Route("/cart")]
         public IActionResult CartPage()
@@ -555,6 +573,7 @@ namespace sellwalker.Controllers
             else
             {
                 int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 User user = _context.Users.Where(a=>a.UserId == id).Include(o=>o.products).ThenInclude(p=>p.Orders).SingleOrDefault();
                 List<Order> orders = _context.Orders.Where(a=>a.UserId == id).Include(o=>o.product).ToList();
                 ViewBag.Status = user.Status;
@@ -563,7 +582,7 @@ namespace sellwalker.Controllers
                 return View("Cart");
             }
         }
-
+// RENDER AND POST SEARCH ALL USERS
         [HttpPost]
         [Route("/search")]
         public IActionResult SearchProduct(string result)
@@ -574,6 +593,8 @@ namespace sellwalker.Controllers
             }
             else
             {
+                int? id = HttpContext.Session.GetInt32("userId");
+                ViewBag.user = id;
                 if(result != null)
                 {
                     List<Product> searchProduct = _context.Products.Where(n=>n.Title.ToLower().Contains(result.ToLower())).Include(o=>o.Orders).ToList();
