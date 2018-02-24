@@ -424,7 +424,15 @@ namespace sellwalker.Controllers
                 ViewBag.user = id;
                 List<User> allUsers = _context.Users.Include(u=>u.products).ThenInclude(y=>y.Orders).ToList();
                 ViewBag.customers = allUsers;
-                return View("CustomerControl");
+                if(checkUserStatus() == false)
+                {
+                    return RedirectToAction("HomePage");
+                }
+                else
+                {
+                    return View("CustomerControl");
+                }
+                
             }
         }
 
