@@ -450,7 +450,9 @@ namespace sellwalker.Controllers
                 int? id = HttpContext.Session.GetInt32("userId");
                 ViewBag.user = id;
                 User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
+                List<Review> theseReviews = _context.Reviews.Where(r=>r.ReviewedId == userId).ToList();
                 ViewBag.thisUser = thisUser;
+                ViewBag.theseReviews = theseReviews;
 
                 if(checkUserStatus() == false)
                 {
@@ -677,7 +679,7 @@ namespace sellwalker.Controllers
                         Content = check.Content,
                         CreatedAt = DateTime.Now,
                         UserId = reviewer.UserId,
-                        ReviewedId = reviewed.ReviewedId
+                        ReviewedId = userId
                     };
                     _context.Add(newReview);
                     _context.SaveChanges();

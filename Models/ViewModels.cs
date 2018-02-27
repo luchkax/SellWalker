@@ -118,5 +118,9 @@ namespace sellwalker.Models
 
         public int ReviewedId{get;set;}
     }
-   
+    public class ReviewCheck : BaseEntity
+    {
+        [Required]
+        public string Content{get;set;}
+    }
 }

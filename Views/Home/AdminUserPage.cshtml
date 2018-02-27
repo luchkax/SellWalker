@@ -1,3 +1,4 @@
+@model sellwalker.Models.ReviewCheck
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -64,12 +65,14 @@
                 <img src="~/images/Unknown.png" alt="No image available">
             </div>
         }
+
+    
     <div class="userInfo">
         <h2>@ViewBag.thisUser.FirstName @ViewBag.thisUser.LastName </h2>
         @{
             if(@ViewBag.thisUser.UserId != @ViewBag.user)
             {
-                <a href="mailto:@ViewBag.thisUser.Email"><i class="glyphicon glyphicon-envelope"></i> Email</a> <a href="#"><i class="glyphicon glyphicon-comment"></i> Message</a> <a href="#"><i class="glyphicon glyphicon-pencil"></i> Write a Review</a>
+                <a href="mailto:@ViewBag.thisUser.Email"><i class="glyphicon glyphicon-envelope"></i> Email</a> <a href="#" ><i class="glyphicon glyphicon-comment"></i> Message</a> <a href="#" id="myHref" ><i class="glyphicon glyphicon-pencil"></i> Write a Review</a>
 
             }
             else
@@ -78,6 +81,35 @@
             }
         }
     </div>
+    @{
+        if(@ViewBag.user != @ViewBag.thisUser.UserId)
+        {
+            <div class="reviewInput">
+                        <hr>
+                        <form asp-controller="Home" asp-action="CreateReview" method="post">
+                            <div class="form-group">
+                                <label asp-for="Content">Review this seller</label>
+                                <textarea  asp-for="Content" class="form-control" id="Content"></textarea>
+                                <span asp-validation-for="Content"></span> 
+                                <br>
+                                <button type="submit" class="btn btn-primary">Post</button>
+
+                            </div>
+                        </form>
+                    </div>
+        }
+    }
+        @{
+            foreach (var review in @ViewBag.theseReviews)
+            {
+            <div class="reviewsArea">
+                <a href="/user/@review.UserId"><h4>@review.Reviewer.FirstName</h4></a>
+                <p>@review.Content</p>
+                <p class="dateReview">@review.CreatedAt</p>
+            </div>
+            }
+        }
+       
 
     </div>
     <div class="rightUser">

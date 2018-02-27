@@ -406,4 +406,12 @@
        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
        margin-left: 390px;
    }
-  
+  .reviewInput{
+      width: 275px;
+  }
+  .reviewsArea{
+      width: 275px;
+  }
+  .dateReview{
+      color: gray;
+  }
