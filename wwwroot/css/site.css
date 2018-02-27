@@ -407,7 +407,8 @@
        margin-left: 390px;
    }
   .reviewInput{
-      width: 275px;
+    display: none;
+    width: 275px;
   }
   .reviewsArea{
       width: 275px;

@@ -660,7 +660,7 @@ namespace sellwalker.Controllers
 
         [HttpPost]
         [Route("/create_review/{userId}")]
-        public IActionResult CreateReview(Review check, int userId)
+        public IActionResult CreateReview(ReviewCheck check, int userId)
         {
             if(checkLogStatus() == false)
             {
@@ -670,21 +670,29 @@ namespace sellwalker.Controllers
             {
                 int? id = HttpContext.Session.GetInt32("userId");
                 ViewBag.user = id;
-                if(ModelState.IsValid && userId != id)
+                if(ModelState.IsValid)
                 {
-                    User reviewed = _context.Users.Where(u=>u.UserId == userId).SingleOrDefault();
-                    User reviewer = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
-                    Review newReview = new Review
+                    if(userId != id)
                     {
-                        Content = check.Content,
-                        CreatedAt = DateTime.Now,
-                        UserId = reviewer.UserId,
-                        ReviewedId = userId
-                    };
-                    _context.Add(newReview);
-                    _context.SaveChanges();
+                        User reviewed = _context.Users.Where(u=>u.UserId == userId).SingleOrDefault();
+                        User reviewer = _context.Users.Where(u=>u.UserId == id).SingleOrDefault();
+                        Review newReview = new Review
+                        {
+                            Content = check.Content,
+                            CreatedAt = DateTime.Now,
+                            UserId = reviewer.UserId,
+                            ReviewedId = userId
+                        };
+                        _context.Add(newReview);
+                        _context.SaveChanges();
 
-                    return RedirectToAction("UserPage");
+                        return RedirectToAction("UserPage");
+                    }
+                    else
+                    {
+                        ViewBag.error = "Input incorrect";
+                        return RedirectToAction("UserPage");
+                    }
                 }
                 else
                 {

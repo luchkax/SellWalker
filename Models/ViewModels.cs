@@ -121,6 +121,7 @@ namespace sellwalker.Models
     public class ReviewCheck : BaseEntity
     {
         [Required]
+        [MinLength(5)]
         public string Content{get;set;}
     }
 }

@@ -1,4 +1,11 @@
 @model sellwalker.Models.ReviewCheck
+<script>
+    $(document).ready(function(){
+        $("#writeReview").click(function(){
+            $(".reviewInput").fadeIn(1000);
+        });
+    });
+</script>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -72,7 +79,11 @@
         @{
             if(@ViewBag.thisUser.UserId != @ViewBag.user)
             {
-                <a href="mailto:@ViewBag.thisUser.Email"><i class="glyphicon glyphicon-envelope"></i> Email</a> <a href="#" ><i class="glyphicon glyphicon-comment"></i> Message</a> <a href="#" id="myHref" ><i class="glyphicon glyphicon-pencil"></i> Write a Review</a>
+                <a href="mailto:@ViewBag.thisUser.Email"><i class="glyphicon glyphicon-envelope"></i> Email</a> 
+                
+                <a href="#" ><i class="glyphicon glyphicon-comment"></i> Message</a>
+                
+                <a href="#" id="writeReview"><i class="glyphicon glyphicon-pencil"></i> Write a Review</a>
 
             }
             else
@@ -86,7 +97,7 @@
         {
             <div class="reviewInput">
                         <hr>
-                        <form asp-controller="Home" asp-action="CreateReview" method="post">
+                        <form asp-controller="Home" asp-action="CreateReview"  method="post">
                             <div class="form-group">
                                 <label asp-for="Content">Review this seller</label>
                                 <textarea  asp-for="Content" class="form-control" id="Content"></textarea>
@@ -102,6 +113,7 @@
         @{
             foreach (var review in @ViewBag.theseReviews)
             {
+                <hr>
             <div class="reviewsArea">
                 <a href="/user/@review.UserId"><h4>@review.Reviewer.FirstName</h4></a>
                 <p>@review.Content</p>
