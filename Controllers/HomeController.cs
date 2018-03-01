@@ -450,9 +450,11 @@ namespace sellwalker.Controllers
                 int? id = HttpContext.Session.GetInt32("userId");
                 ViewBag.user = id;
                 User thisUser = _context.Users.Where(u=>u.UserId == userId).Include(p=>p.products).SingleOrDefault();
-                List<Review> theseReviews = _context.Reviews.Where(r=>r.ReviewedId == userId).ToList();
+                List<Review> theseReviews = _context.Reviews.Where(r=>r.ReviewedId == thisUser.UserId).Include(u=>u.Reviewer).ToList();
                 ViewBag.thisUser = thisUser;
                 ViewBag.theseReviews = theseReviews;
+                
+                
 
                 if(checkUserStatus() == false)
                 {
